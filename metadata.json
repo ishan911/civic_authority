@@ -1,0 +1,6 @@
+{
+  "name": "The Civic Authority",
+  "description": "A high-end, responsive civic reporting and community action portal that connects citizens with municipal progress.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
