@@ -1,8 +1,27 @@
+# ── Frontend ─────────────────────────────────────────────
 node_modules/
-build/
 dist/
+build/
 coverage/
-.DS_Store
-*.log
+
+# ── Go backend ────────────────────────────────────────────
+# Compiled binaries (produced by `go build -o <name>`)
+gateway/gateway
+services/issue-service/issue-service
+services/analytics-service/analytics-service
+# Air (Go live reload) temp build
+tmp/
+
+# ── Protobuf ──────────────────────────────────────────────
+# pb/ is committed — generated but part of the source tree
+# If you ever want to regenerate: protoc --go_out=./pb --go-grpc_out=./pb proto/*.proto
+
+# ── Secrets & environment ─────────────────────────────────
 .env*
 !.env.example
+
+# ── OS / editor ───────────────────────────────────────────
+.DS_Store
+*.log
+.idea/
+.vscode/

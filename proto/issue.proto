@@ -1,0 +1,27 @@
+// M3: This file will be implemented when building the gRPC layer.
+// Proto files are the single source of truth for all service contracts.
+// Running `protoc` against this file generates Go structs in /pb/.
+//
+// To compile (once protoc is installed):
+//   protoc --go_out=../pb --go_out=paths=source_relative:../pb \
+//          --go-grpc_out=../pb --go-grpc_out=paths=source_relative:../pb \
+//          issue.proto
+
+syntax = "proto3";
+
+package issue;
+
+option go_package = "github.com/ishanjayman/civic-authority/pb";
+
+// IssueService handles all civic issue CRUD operations.
+// The gateway will call this service via gRPC instead of querying PostgreSQL directly.
+service IssueService {
+  rpc ReportIssue   (ReportIssueRequest)   returns (IssueResponse);
+  rpc GetIssues     (GetIssuesRequest)     returns (GetIssuesReply);
+  rpc GetIssue      (GetIssueRequest)      returns (IssueResponse);
+  rpc UpdateStatus  (UpdateStatusRequest)  returns (IssueResponse);
+}
+
+// TODO (M3): Define message types for each RPC above.
+// Each message maps 1:1 to the JSON request/response shapes already
+// used by the REST handlers in gateway/handlers/issues.go.

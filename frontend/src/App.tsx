@@ -12,7 +12,7 @@ import MapView from './components/MapView';
 import SubmitReportView from './components/SubmitReportView';
 import IssueDetailView from './components/IssueDetailView';
 import ProfileView from './components/ProfileView';
-import { Menu, Search, Home as HomeIcon, Map as MapIcon, ClipboardList, User, Sparkles, CheckCircle2, ChevronRight } from 'lucide-react';
+import { Menu, Search, Home as HomeIcon, Map as MapIcon, ClipboardList, User, Sparkles, CheckCircle2, ChevronRight, LogIn } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 export default function App() {
@@ -33,6 +33,9 @@ export default function App() {
     const saved = localStorage.getItem('civic_authority_dark');
     return saved === 'true';
   });
+
+  // Auth state — false = guest view (M2: wire to real JWT)
+  const [isLoggedIn] = useState<boolean>(false);
 
   // User Profile
   const [profile] = useState<UserProfile>({
@@ -312,7 +315,6 @@ export default function App() {
                 { name: 'Home', tab: 'Home' },
                 { name: 'Explore Services', tab: 'Explore' },
                 { name: 'Coordinates Map', tab: 'Map' },
-                { name: 'My Timelines', tab: 'Reports' },
               ].map((item) => (
                 <button
                   key={item.tab}
@@ -328,13 +330,24 @@ export default function App() {
               ))}
             </nav>
 
-            {/* Profile circular headshot trigger */}
-            <div 
-              onClick={() => { setActiveTab('Profile'); setSelectedIssueId(null); setShowReportingWizard(false); }}
-              className="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/20 dark:border-primary-fixed-dim/20 cursor-pointer shadow-sm hover:scale-105 active:scale-95 transition-transform"
-            >
-              <img src={profile.avatar} alt="User Profile Avatar" className="w-full h-full object-cover" />
-            </div>
+            {isLoggedIn ? (
+              /* Logged-in: profile avatar */
+              <div
+                onClick={() => { setActiveTab('Profile'); setSelectedIssueId(null); setShowReportingWizard(false); }}
+                className="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/20 dark:border-primary-fixed-dim/20 cursor-pointer shadow-sm hover:scale-105 active:scale-95 transition-transform"
+              >
+                <img src={profile.avatar} alt="User Profile Avatar" className="w-full h-full object-cover" />
+              </div>
+            ) : (
+              /* Guest: sign in button */
+              <button
+                onClick={() => {/* M2: open auth modal */}}
+                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-900 dark:bg-primary-fixed-dim text-white dark:text-blue-950 text-[11px] font-extrabold tracking-widest uppercase hover:bg-blue-800 dark:hover:bg-primary-fixed-dim/90 active:scale-95 transition-all shadow-sm"
+              >
+                <LogIn size={13} strokeWidth={2.5} />
+                Sign In
+              </button>
+            )}
           </div>
 
         </div>

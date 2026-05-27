@@ -1,0 +1,7 @@
+DROP TRIGGER IF EXISTS issues_updated_at ON issues;
+DROP FUNCTION IF EXISTS update_updated_at();
+DROP TABLE IF EXISTS votes;
+DROP TABLE IF EXISTS comments;
+DROP TABLE IF EXISTS milestones;
+DROP TABLE IF EXISTS issues;
+DROP TABLE IF EXISTS users;
